@@ -1,7 +1,7 @@
-package jpabook.jpashop.service;
+package com.budget.service;
 
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.repository.MemberRepository;
+import com.budget.domain.Member;
+import com.budget.repository.MemberRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

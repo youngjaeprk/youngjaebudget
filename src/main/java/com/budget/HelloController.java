@@ -1,4 +1,4 @@
-package jpabook.jpashop;
+package com.budget;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
