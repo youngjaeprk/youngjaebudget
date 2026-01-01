@@ -1,4 +1,4 @@
-package jpabook.jpashop;
+package com.budget;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.springframework.boot.SpringApplication;

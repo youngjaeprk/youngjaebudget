@@ -1,15 +1,15 @@
 package com.budget.service;
 
+import com.budget.Member.MemberService;
 import com.budget.domain.Member;
 import com.budget.repository.MemberRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
 
 import static org.junit.Assert.*;
 
@@ -20,35 +20,34 @@ public class MemberServiceTest {
 
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
-    @Autowired EntityManager em;
-
     @Test
-    public void 회원가입() throws Exception {
+    public void 회원가입() throws Exception{
+
         //given
         Member member = new Member();
-        member.setName("kim");
+        member.setName("park");
 
         //when
-        Long savedId = memberService.join(member);
-
+        Long saveId = memberService.memberJoin(member);
         //then
-        assertEquals(member, memberRepository.findOne(savedId));
+        assertEquals(member, memberRepository.findOne(saveId));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void 중복_회원_예외() throws Exception {
-        //given
+    public void 중복_회원_예외() throws Exception{
+
         Member member1 = new Member();
-        member1.setName("kim");
+        member1.setName("park1");
 
         Member member2 = new Member();
-        member2.setName("kim");
+        member2.setName("park1");
 
         //when
-        memberService.join(member1);
-        memberService.join(member2); //예외가 발생해야 한다!!!
+        memberService.memberJoin(member1);
+        memberService.memberJoin(member2);
 
-        //then
+        //then (위에서 터져서 끝내야 해서 여기까지 오면 또 실패임)
         fail("예외가 발생해야 한다.");
+
     }
 }
