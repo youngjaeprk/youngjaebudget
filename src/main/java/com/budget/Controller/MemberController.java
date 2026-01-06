@@ -3,6 +3,7 @@ package com.budget.Controller;
 import com.budget.Member.MemberService;
 import com.budget.domain.Address;
 import com.budget.domain.Member;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -51,4 +52,31 @@ public class MemberController {
         return "members/memberList";
     }
 
+
+    @GetMapping("/members/login")
+    public String loginForm(Model model) {
+        model.addAttribute("loginForm", new LoginForm());
+        return "members/loginForm";
+    }
+
+    @PostMapping("/members/login")
+    public String login(@Valid LoginForm form, BindingResult result,
+                        HttpSession session) {
+        if(result.hasErrors()) {
+            return "members/loginForm";
+        }
+
+        // 로그인 로직
+        Member member = memberService.login(form.getName(), form.getPassword());
+
+        if(member == null) {
+            result.reject("loginFail", "이메일 또는 비밀번호가 틀렸습니다");
+            return "members/loginForm";
+        }
+
+        // 세션에 회원 정보 저장
+        session.setAttribute("memberId", member.getId());
+
+        return "redirect:/";
+    }
 }

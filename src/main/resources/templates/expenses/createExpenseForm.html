@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+  .fieldError {
+    border-color: #bd2130;
+  }
+</style>
+<body>
+
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+  <form th:action="@{/expenses/new}" th:object="${expenseForm}" method="post">
+
+    <div class="form-group">
+      <label th:for="category">카테고리</label>
+      <select id="category" th:field="*{category}" class="form-control"
+              th:class="${#fields.hasErrors('category')}? 'form-control fieldError' : 'form-control'">
+        <option value="">-- 카테고리를 선택하세요 --</option>
+        <option value="생필품">생필품</option>
+        <option value="의류">의류</option>
+        <option value="미용">미용</option>
+        <option value="교육">교육</option>
+        <option value="통신비">통신비</option>
+        <option value="공과금">공과금</option>
+        <option value="보험">보험</option>
+        <option value="건강">건강</option>
+        <option value="경조사">경조사</option>
+        <option value="대출">대출</option>
+        <option value="부동산">부동산</option>
+        <option value="ott">ott</option>
+        <option value="약속">약속</option>
+      </select>
+      <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger">카테고리 오류</p>
+    </div>
+
+    <div class="form-group">
+      <label th:for="amount">금액</label>
+      <input type="number" id="amount" th:field="*{amount}" class="form-control"
+             placeholder="금액을 입력하세요 (예: 3000000)" step="1000"
+             th:class="${#fields.hasErrors('amount')}? 'form-control fieldError' : 'form-control'">
+      <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="text-danger">금액 오류</p>
+    </div>
+
+    <div class="form-group">
+      <label th:for="date">날짜</label>
+      <input type="date" id="date" th:field="*{date}" class="form-control"
+             th:class="${#fields.hasErrors('date')}? 'form-control fieldError' : 'form-control'">
+      <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="text-danger">날짜 오류</p>
+    </div>
+
+    <div class="form-group">
+      <label th:for="memo">메모 (선택)</label>
+      <textarea id="memo" th:field="*{memo}" class="form-control" rows="3"
+                placeholder="메모를 입력하세요 (선택사항)"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">등록</button>
+    <a href="/" class="btn btn-secondary">취소</a>
+  </form>
+
+  <br/>
+  <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>
