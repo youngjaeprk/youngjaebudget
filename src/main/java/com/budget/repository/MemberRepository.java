@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MemberRepository {
@@ -22,8 +23,17 @@ public class MemberRepository {
         return em.find(Member.class, id);
     }
 
+
+    public Optional<Member> findByLoginId(Long loginId){
+        List<Member> result = em.createQuery(
+                        "select m from Member m where m.loginId = :loginId", Member.class)
+                .setParameter("loginId", loginId)
+                .getResultList();
+        return result.stream().findFirst();
+    }
+
     public List<Member> findAll(){
-        return em.createQuery("select m from Member  m", Member.class)
+        return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
 
@@ -32,6 +42,7 @@ public class MemberRepository {
                 .setParameter("name", name)
                 .getResultList();
     }
+
 
 
 }

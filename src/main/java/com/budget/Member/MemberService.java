@@ -47,5 +47,15 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
-
+    //return null: 로그인 실패
+    @Transactional(readOnly=true)
+    public Member login(Long loginId, String password){
+        Optional<Member> findMemberOptional = memberRepository.findByLoginId(loginId);
+        Member member = findMemberOptional.get();
+        if(member.getPassword().equals(password)){
+            return member;
+        }else{
+            return null;
+        }
+    }
 }

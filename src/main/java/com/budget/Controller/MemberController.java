@@ -56,22 +56,22 @@ public class MemberController {
     @GetMapping("/members/login")
     public String loginForm(Model model) {
         model.addAttribute("loginForm", new LoginForm());
-        return "members/loginForm";
+        return "Controller/loginForm";
     }
 
     @PostMapping("/members/login")
     public String login(@Valid LoginForm form, BindingResult result,
                         HttpSession session) {
         if(result.hasErrors()) {
-            return "members/loginForm";
+            return "Controller/loginForm";
         }
 
         // 로그인 로직
-        Member member = memberService.login(form.getName(), form.getPassword());
+        Member member = memberService.login(form.getLoginId(), form.getPassword());
 
         if(member == null) {
             result.reject("loginFail", "이메일 또는 비밀번호가 틀렸습니다");
-            return "members/loginForm";
+            return "Controller/loginForm";
         }
 
         // 세션에 회원 정보 저장
