@@ -20,6 +20,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    //회원가입
     @GetMapping("/members/new")
     public String createForm(Model model){
         model.addAttribute("memberForm",new MemberForm());
@@ -52,18 +53,18 @@ public class MemberController {
         return "members/memberList";
     }
 
-
+    //회원 로그인
     @GetMapping("/members/login")
     public String loginForm(Model model) {
         model.addAttribute("loginForm", new LoginForm());
-        return "Controller/loginForm";
+        return "members/loginMemberForm";
     }
 
     @PostMapping("/members/login")
     public String login(@Valid LoginForm form, BindingResult result,
                         HttpSession session) {
         if(result.hasErrors()) {
-            return "Controller/loginForm";
+            return "members/loginMemberForm";
         }
 
         // 로그인 로직
